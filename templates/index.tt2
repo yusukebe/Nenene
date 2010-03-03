@@ -1,0 +1,30 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" href="static/screen.css" type="text/css" media="screen, projection">
+<link rel="stylesheet" href="static/print.css" type="text/css" media="print">
+<!--[if lt IE 8]><link rel="stylesheet" href="static/ie.css" type="text/css" media="screen, projection"><![endif]-->
+<title>Nenene</title>
+<style type="text/css">
+div.container { color: #000; font-size: 1.2em; }
+h3,h4 { font-weight:bold; }
+address { color: #333; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <hr class="space" />
+  <div class="span-2">&nbsp;</div>
+  <div class="span-18">
+    [% body %]
+    <hr />
+    <address>This document is served by Nenene.</address>
+  </div>
+  <div class="span-2 last">
+  </div>
+</div>
+</body>
+</html>
