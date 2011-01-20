@@ -4,6 +4,7 @@ use MouseX::Types::Path::Class;
 use Path::Class qw( file dir );
 use Text::Xslate;
 use Text::Markdown;
+use Try::Tiny;
 use Carp qw( croak );
 
 has 'md' => (
@@ -53,6 +54,12 @@ has 'tx' => (
     lazy_build => 1
 );
 
+has 'files' => (
+    is => 'rw',
+    isa => 'ArrayRef',
+    auto_deref => 1,
+);
+
 no Mouse;
 
 sub _build_tx {
@@ -60,12 +67,29 @@ sub _build_tx {
     return Text::Xslate->new( $self->template );
 }
 
+sub _build_files {
+    my $self = shift;
+    $self->loop_dir( $self->data );
+}
+
+sub loop_dir {
+    my ( $self, $dir ) = @_;
+    my @children;
+    my $ext = $self->extention;
+    for my $child ( $dir->children() ){
+        $self->loop_dir($child) if $child->is_dir;
+        next unless $child =~ /$ext$/;
+        push @children, $child;
+    }
+    my @files = ($self->files,@children);
+    $self->files( \@files );
+}
+
 sub generate {
     my $self = shift;
-    my $ext = $self->extention;
-    for my $child ( $self->data->children() ){
-        next unless $child =~ /$ext$/;
-        $self->generate_html($child);
+    $self->_build_files();
+    for my $file ( $self->files ){
+        $self->generate_html($file);
     }
 }
 
@@ -75,7 +99,14 @@ sub generate_html {
     my $html = $self->md->markdown( $mkdn );
     $html = $self->tx->render_string($html, $self->stash);
     my $file = file( $self->html_path( $path ) );
-    my $fh = $file->open('w') or croak "Can't write $file : $!";
+    my $fh;
+    try {
+        $fh = $file->open('w');
+    }catch{
+        dir( $file->parent->mkpath )->mkpath();
+        $fh = $file->open('w');
+    };
+    warn $file . "\n";
     $fh->print($html);
 }
 
