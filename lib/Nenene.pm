@@ -106,7 +106,7 @@ sub generate_html {
         dir( $file->parent->mkpath )->mkpath();
         $fh = $file->open('w');
     };
-    warn $file . "\n";
+    warn "Create: " . $file . "\n";
     $fh->print($html);
 }
 
