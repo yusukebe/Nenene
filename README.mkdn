@@ -2,6 +2,12 @@
 
 Yet another contents generator.
 
+# Requied Modules
+
+- Mouse
+- Text::Markdown
+- Text::Xslate
+
 # AUTHOR 
 
 - Yusuke Wada

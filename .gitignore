@@ -10,4 +10,7 @@ tmon.out
 cover_db_view
 nytprof
 .DS_Store
-doc
+data
+htdocs
+sandbox
+tmpl
