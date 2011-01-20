@@ -1,0 +1,9 @@
+# Nenene
+
+Yet another contents generator.
+
+# AUTHOR 
+
+- Yusuke Wada
+- http://yusukebe.com/
+- yusuke@kamawada.com
